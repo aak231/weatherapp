@@ -2,16 +2,6 @@ import React, { useState, useEffect } from 'react'
 import "./style.css"
 
 
-// const getTime = (time) =>{
-//     let sec = time
-//     let date = new Date(sec*1000)
-//     console.log(date.toUTCString())
-//     let adjustedHours = date.getHours().toString().length === 1 ? "0" + date.getHours().toString() : date.getHours().toString()
-//     let adjustedMinutes= date.getMinutes().toString().length=== 1 ? "0" + date.getMinutes().toString(): date.getMinutes().toString()
-//     let timeString = `${adjustedHours}:${adjustedMinutes}`
-//     console.log(date.getHours().toString() , date.getMinutes().toString())
-//     return timeString
-// }
 
 
 const WeatherCard = ({ tempInfo }) => {
@@ -21,18 +11,9 @@ const WeatherCard = ({ tempInfo }) => {
     const {
         temp, humidity, pressure, weatherDescription, name, speed, country, adjustedSunset, datetime, isCurrentLocation
     } = tempInfo
-    // let sec = sunset
-    // let date = new Date(sec * 1000)
-    // let timeString = `${date.getHours()}:${date.getMinutes().toString().length===1 ? "0"+date.getMinutes().toString(): date.getMinutes().toString() }`
-    const getSunset = (time) => {
+       const getSunset = (time) => {
         let sec = time
         let date = new Date(sec * 1000)
-        // if (isCurrentLocation) {
-        //     let adjustedHours = date.getHours().toString().length === 1 ? "0" + date.getHours().toString() : date.getHours().toString()
-        //     let adjustedMinutes = date.getMinutes().toString().length === 1 ? "0" + date.getMinutes().toString() : date.getMinutes().toString()
-        //     let timeString = `${adjustedHours}:${adjustedMinutes}`
-        //     return timeString
-        // }
         let adjustedHours = date.getUTCHours().toString().length === 1 ? "0" + date.getUTCHours().toString() : date.getUTCHours().toString()
         let adjustedMinutes = date.getUTCMinutes().toString().length === 1 ? "0" + date.getUTCMinutes().toString() : date.getUTCMinutes().toString()
         let timeString = `${adjustedHours}:${adjustedMinutes}`

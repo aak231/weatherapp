@@ -4,7 +4,6 @@ import './style.css'
 import '../.env'
 
 
-// https://api.openweathermap.org/data/2.5/weather?q=Islamabad&units=metric&appid=6d3aaa8a5abd1b2dbf5a87e420b6b6e5
 const Weather = () => {
 
     const [searchValue, setSearchValue] = useState("Islamabad")
@@ -28,13 +27,11 @@ const Weather = () => {
         try {
             if (userLocation) {
 
-                let urlWeatherLatLong = `https://api.openweathermap.org/data/2.5/weather?lat=${userLocation.coords.latitude.toFixed(4)}&lon=${userLocation.coords.longitude.toFixed(4)}&units=metric&appid=6d3aaa8a5abd1b2dbf5a87e420b6b6e5`
-                // let urlWeatherLatLong = `https://api.openweathermap.org/data/2.5/weather?lat=${40.635665}&lon=${-74.023920}&units=metric&appid=6d3aaa8a5abd1b2dbf5a87e420b6b6e5`
+                let urlWeatherLatLong = `https://api.openweathermap.org/data/2.5/weather?lat=${userLocation.coords.latitude.toFixed(4)}&lon=${userLocation.coords.longitude.toFixed(4)}&units=metric&appid={API_KEY_OPENWEATHER}`
 
-                let urlTime = `https://timezone.abstractapi.com/v1/current_time/?api_key=ab0716307a2b4cb49a23a2deaeb9686f&location=${userLocation.coords.latitude + "," + userLocation.coords.longitude}`
+                let urlTime = `https://timezone.abstractapi.com/v1/current_time/?api_key={API_KEY_TIMEZONE}&location=${userLocation.coords.latitude + "," + userLocation.coords.longitude}`
 
-                // let urlTime = `https://timezone.abstractapi.com/v1/current_time/?api_key=ab0716307a2b4cb49a23a2deaeb9686f&location=${40.635665 + "," + -74.023920}`
-                let urlReverseGeocode = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLocation.coords.latitude + "," + userLocation.coords.longitude}&key=AIzaSyADaj-xDzXHwwIcDzD5bvOCdCyOwQHEVNY`
+                let urlReverseGeocode = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLocation.coords.latitude + "," + userLocation.coords.longitude}&key={API_KEY_GOOGLE}`
 
                 
                 const responseWeatherCoord = await fetch(urlWeatherLatLong)
@@ -84,7 +81,7 @@ const Weather = () => {
     }
     const getCoordinates = async () => {
         try {
-            let urlGeocode = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=AIzaSyADaj-xDzXHwwIcDzD5bvOCdCyOwQHEVNY`
+            let urlGeocode = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key={API_KEY_GOOGLE}`
 
             const responseGeocode = await fetch(urlGeocode)
             const dataGeocode = await responseGeocode.json()
@@ -109,9 +106,9 @@ const Weather = () => {
             console.log((await coordinates).latitude, (await coordinates).longitude)
             console.log(searchValue)
 
-            let urlWeatherCityName = `https://api.openweathermap.org/data/2.5/weather?lat=${(await coordinates).latitude}&lon=${(await coordinates).longitude}&units=metric&appid=6d3aaa8a5abd1b2dbf5a87e420b6b6e5`
+            let urlWeatherCityName = `https://api.openweathermap.org/data/2.5/weather?lat=${(await coordinates).latitude}&lon=${(await coordinates).longitude}&units=metric&appid={API_KEY_OPENWEATHER}`
 
-            let urlTime = `https://timezone.abstractapi.com/v1/current_time/?api_key=ab0716307a2b4cb49a23a2deaeb9686f&location=${searchValue}`
+            let urlTime = `https://timezone.abstractapi.com/v1/current_time/?api_key={API_KEY_TIMEZONE}&location=${searchValue}`
 
 
             const responseTime = await fetch(urlTime)
