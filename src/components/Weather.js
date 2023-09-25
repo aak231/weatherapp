@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import WeatherCard from "./WeatherCard"
 import './style.css'
-import '../.env'
 
+const openWeatherKey = "6d3aaa8a5abd1b2dbf5a87e420b6b6e5";
+const googleKey = "AIzaSyBfljl86heD5ijGF5j9P9LorOjm26bCfD8";
+const timeZoneKey = "5edba0e1b637469cbb354328814eb8b6";
+const ipgeolocation = "5a3e3af0888d4cada9045cb35d7f25a7";
 
 const Weather = () => {
 
-    const [searchValue, setSearchValue] = useState("Islamabad")
+    const [searchValue, setSearchValue] = useState("Karachi")
     const [tempInfo, setTempInfo] = useState({})
     const [userLocation, setUserLocation] = useState({})
 
@@ -27,11 +30,11 @@ const Weather = () => {
         try {
             if (userLocation) {
 
-                let urlWeatherLatLong = `https://api.openweathermap.org/data/2.5/weather?lat=${userLocation.coords.latitude.toFixed(4)}&lon=${userLocation.coords.longitude.toFixed(4)}&units=metric&appid={API_KEY_OPENWEATHER}`
+                let urlWeatherLatLong = `https://api.openweathermap.org/data/2.5/weather?lat=${userLocation.coords.latitude.toFixed(4)}&lon=${userLocation.coords.longitude.toFixed(4)}&units=metric&appid=6d3aaa8a5abd1b2dbf5a87e420b6b6e5`
 
-                let urlTime = `https://timezone.abstractapi.com/v1/current_time/?api_key={API_KEY_TIMEZONE}&location=${userLocation.coords.latitude + "," + userLocation.coords.longitude}`
+                let urlTime = `https://ipgeolocation.abstractapi.com/v1/?api_key=5edba0e1b637469cbb354328814eb8b6&latitude=${userLocation.coords.latitude}&longitude=${userLocation.coords.longitude}`
 
-                let urlReverseGeocode = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLocation.coords.latitude + "," + userLocation.coords.longitude}&key={API_KEY_GOOGLE}`
+                let urlReverseGeocode = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLocation.coords.latitude + "," + userLocation.coords.longitude}&key=AIzaSyBfljl86heD5ijGF5j9P9LorOjm26bCfD8`
 
                 
                 const responseWeatherCoord = await fetch(urlWeatherLatLong)
@@ -57,7 +60,7 @@ const Weather = () => {
                 const adjustedSunset = sunset + timezone
 
                 console.log(sunset, timezone, adjustedSunset)
-                const { datetime } = dataTime
+                const { current_time : datetime  } = dataTime.timezone
                 const isCurrentLocation = true
                 const myWeatherObject = {
                     temp, humidity, pressure, weatherDescription, name, speed, country, adjustedSunset, datetime, isCurrentLocation
@@ -81,7 +84,7 @@ const Weather = () => {
     }
     const getCoordinates = async () => {
         try {
-            let urlGeocode = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key={API_KEY_GOOGLE}`
+            let urlGeocode = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=AIzaSyBfljl86heD5ijGF5j9P9LorOjm26bCfD8`
 
             const responseGeocode = await fetch(urlGeocode)
             const dataGeocode = await responseGeocode.json()
@@ -102,13 +105,13 @@ const Weather = () => {
     }
     const getWeatherInfo = async () => {
         try {
-            const coordinates = getCoordinates()
-            console.log((await coordinates).latitude, (await coordinates).longitude)
+            const coordinates = await getCoordinates()
+            console.log(coordinates.latitude, coordinates.longitude)
             console.log(searchValue)
 
-            let urlWeatherCityName = `https://api.openweathermap.org/data/2.5/weather?lat=${(await coordinates).latitude}&lon=${(await coordinates).longitude}&units=metric&appid={API_KEY_OPENWEATHER}`
+            let urlWeatherCityName = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=metric&appid=6d3aaa8a5abd1b2dbf5a87e420b6b6e5`
 
-            let urlTime = `https://timezone.abstractapi.com/v1/current_time/?api_key={API_KEY_TIMEZONE}&location=${searchValue}`
+            let urlTime = `https://api.ipgeolocation.io/timezone?apiKey=${ipgeolocation}&lat=${coordinates.latitude}&long=${coordinates.longitude}`;
 
 
             const responseTime = await fetch(urlTime)
@@ -126,14 +129,14 @@ const Weather = () => {
 
             const { temp, humidity, pressure } = dataWeatherLoc.main
             const { main: weatherDescription } = dataWeatherLoc.weather[0]
-            const name = (await coordinates).locationName
+            const name = coordinates.locationName
             const { speed } = dataWeatherLoc.wind
             const { country, sunset } = dataWeatherLoc.sys
             const { timezone } = dataWeatherLoc
             const adjustedSunset = sunset + timezone 
 
             console.log(sunset, timezone, adjustedSunset)
-            const { datetime } = dataTime
+            const { date_time : datetime } = dataTime
             const isCurrentLocation = false
 
             const myWeatherObject = {
@@ -155,7 +158,7 @@ const Weather = () => {
             <div className="wrap">
                 <div className="search">
                     <input type="search"
-                        placeholder="search.."
+                        placeholder="Enter any location (city, state, country etc)"
                         autoFocus
                         id="search"
                         className="searchTerm"
@@ -166,7 +169,7 @@ const Weather = () => {
                         Search
                     </button>
                     <button className="findMeButton" type="button" onClick={getUserLocationsWeatherInfo}>
-                        Use my Location
+                        Use my location instead
                     </button>
                 </div>
             </div>

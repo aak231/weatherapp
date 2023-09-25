@@ -13,7 +13,7 @@
   --dur: 0.3s;
   --color-dark: #2f2f2f;
   --color-light: #fff;
-  --color-brand: #57bd84;
+  --color-brand: #c19770;
   --font-fam: "Lato", sans-serif;
   --height: 5rem;
   --btn-width: 6rem;
@@ -87,7 +87,7 @@ body {
 .widget .date {
   flex: 0 0 30%;
   height: 40%;
-  background: #70c1b3;
+  background: #c19770;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -121,7 +121,8 @@ body {
   grid-template-columns: repeat(2, 1fr);
   text-align: center;
   align-items: center;
-  color: #70c1b3;
+  /* color: #70c1b3; */
+  color: #c19770;
   /* background-color: blanchedalmond; */
 }
 
@@ -150,18 +151,18 @@ body {
   height: 20px;
   border-radius: 5px 0 0 5px;
   outline: none;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 .searchTerm:focus {
-  color: #00b4cc;
+  color: #000000;
 }
 
 .searchButton {
   width: 80px;
   height: 32px;
   border: none;
-  background: #048b9c;
+  background: #c19770;
   text-align: center;
   color: #fff;
   border-radius: 0 5px 5px 0;
@@ -169,13 +170,14 @@ body {
   font-size: 20px;
   outline: none;
   font-size: 16px;
+  font-weight: 600;
 }
 .findMeButton{
-  width: 150px;
+  width: 200px;
   height: 32px;
   border: none;
   margin-left: 10px;
-  background: #048b9c;
+  background: #c19770;
   text-align: center;
   color: #fff;
   border-radius: 5px 5px 5px 5px;
@@ -183,12 +185,13 @@ body {
   font-size: 20px;
   outline: none;
   font-size: 16px;
+  font-weight: 600;
 }
 .findMeButton:hover {
-    background-color: #17b8ce;
+    background-color: #bf7e41;
 }
 .searchButton:hover {
-  background-color: #17b8ce;
+  background-color: #bf7e41;
 }
 
 .wrap {
