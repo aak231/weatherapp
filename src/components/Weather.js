@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react'
 import WeatherCard from "./WeatherCard"
 import './style.css'
 
-const openWeatherKey = "6d3aaa8a5abd1b2dbf5a87e420b6b6e5";
-const googleKey = "AIzaSyBfljl86heD5ijGF5j9P9LorOjm26bCfD8";
+const openWeatherKey = "YOUR_OPENWEATHER_KEY";
+const googleKey = "YOUR_GOOGLE_MAPS_API_KEY";
 // Deprecated
 // const timeZoneKey = "key";
-const ipgeolocation = "5a3e3af0888d4cada9045cb35d7f25a7";
+const ipgeolocation = "YOUR_IP_GEOLOCATION_KEY";
 
 const Weather = () => {
 
