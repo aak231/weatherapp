@@ -4,7 +4,8 @@ import './style.css'
 
 const openWeatherKey = "6d3aaa8a5abd1b2dbf5a87e420b6b6e5";
 const googleKey = "AIzaSyBfljl86heD5ijGF5j9P9LorOjm26bCfD8";
-const timeZoneKey = "5edba0e1b637469cbb354328814eb8b6";
+// Deprecated
+// const timeZoneKey = "key";
 const ipgeolocation = "5a3e3af0888d4cada9045cb35d7f25a7";
 
 const Weather = () => {
@@ -30,11 +31,11 @@ const Weather = () => {
         try {
             if (userLocation) {
 
-                let urlWeatherLatLong = `https://api.openweathermap.org/data/2.5/weather?lat=${userLocation.coords.latitude.toFixed(4)}&lon=${userLocation.coords.longitude.toFixed(4)}&units=metric&appid=6d3aaa8a5abd1b2dbf5a87e420b6b6e5`
+                let urlWeatherLatLong = `https://api.openweathermap.org/data/2.5/weather?lat=${userLocation.coords.latitude.toFixed(4)}&lon=${userLocation.coords.longitude.toFixed(4)}&units=metric&appid=${openWeatherKey}`
 
-                let urlTime = `https://ipgeolocation.abstractapi.com/v1/?api_key=5edba0e1b637469cbb354328814eb8b6&latitude=${userLocation.coords.latitude}&longitude=${userLocation.coords.longitude}`
+                let urlTime = `https://api.ipgeolocation.io/timezone?apiKey=${ipgeolocation}&lat=${userLocation.coords.latitude}&long=${userLocation.coords.longitude}`;
 
-                let urlReverseGeocode = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLocation.coords.latitude + "," + userLocation.coords.longitude}&key=AIzaSyBfljl86heD5ijGF5j9P9LorOjm26bCfD8`
+                let urlReverseGeocode = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${userLocation.coords.latitude + "," + userLocation.coords.longitude}&key=${googleKey}`
 
                 
                 const responseWeatherCoord = await fetch(urlWeatherLatLong)
@@ -84,7 +85,7 @@ const Weather = () => {
     }
     const getCoordinates = async () => {
         try {
-            let urlGeocode = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=AIzaSyBfljl86heD5ijGF5j9P9LorOjm26bCfD8`
+            let urlGeocode = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchValue}&key=${googleKey}`
 
             const responseGeocode = await fetch(urlGeocode)
             const dataGeocode = await responseGeocode.json()
@@ -109,7 +110,7 @@ const Weather = () => {
             console.log(coordinates.latitude, coordinates.longitude)
             console.log(searchValue)
 
-            let urlWeatherCityName = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=metric&appid=6d3aaa8a5abd1b2dbf5a87e420b6b6e5`
+            let urlWeatherCityName = `https://api.openweathermap.org/data/2.5/weather?lat=${coordinates.latitude}&lon=${coordinates.longitude}&units=metric&appid=${openWeatherKey}`
 
             let urlTime = `https://api.ipgeolocation.io/timezone?apiKey=${ipgeolocation}&lat=${coordinates.latitude}&long=${coordinates.longitude}`;
 
