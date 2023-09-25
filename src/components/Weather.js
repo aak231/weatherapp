@@ -61,7 +61,7 @@ const Weather = () => {
                 const adjustedSunset = sunset + timezone
 
                 console.log(sunset, timezone, adjustedSunset)
-                const { current_time : datetime  } = dataTime.timezone
+                const { date_time : datetime } = dataTime
                 const isCurrentLocation = true
                 const myWeatherObject = {
                     temp, humidity, pressure, weatherDescription, name, speed, country, adjustedSunset, datetime, isCurrentLocation
